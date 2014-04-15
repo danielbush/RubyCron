@@ -10,6 +10,8 @@ Consists of:
 * ```CronJob```
   * represents the standard cron parameters and some sort of payload or job to run
 
+See Cron.rb and CronJob.rb in lib/* for current documentation.
+
 # Status
 
 Pretty early days.  
@@ -18,9 +20,11 @@ This was part of an experiment in subclassing basic datastructures and playing a
 
 Bit naughty, no specs at the moment.
 
-See Cron.rb and CronJob.rb in lib/* for current documentation.
-
 Dabbled briefly with sub-minute timings - see utils.rb in lib/* but
 stopped after my eyes started to water. That being said there are some
 singleton util methods that might be of use in this regard.
 
+
+# Contact
+
+Pretty bad with email.  Try danb with catalyst-au.net as the domain.
