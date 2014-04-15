@@ -1,6 +1,7 @@
 # RubyCron
 
-Consists of
+Consists of:
+
 *```Cron```
   * a glorified Array representing sequence of CronJob instances
   * a thread that wakes up every minute to determine if jobs are runnable
