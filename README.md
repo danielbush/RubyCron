@@ -12,7 +12,7 @@ Consists of:
 
 See Cron.rb and CronJob.rb in lib/* for current documentation.
 
-# Status
+## Status
 
 Pretty early days.  
 
@@ -24,7 +24,6 @@ Dabbled briefly with sub-minute timings - see utils.rb in lib/* but
 stopped after my eyes started to water. That being said there are some
 singleton util methods that might be of use in this regard.
 
-
-# Contact
+## Contact
 
 Pretty bad with email.  Try danb with catalyst-au.net as the domain.
