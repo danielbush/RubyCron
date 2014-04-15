@@ -2,12 +2,12 @@
 
 Consists of:
 
-*```Cron```
+* ```Cron```
   * a glorified Array representing sequence of CronJob instances
   * a thread that wakes up every minute to determine if jobs are runnable
   * if so, they get put on to a queue
   * you have to deq the queue and do something with the job
-*```CronJob```
+* ```CronJob```
   * represents the standard cron parameters and some sort of payload or job to run
 
 # Status
