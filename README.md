@@ -24,6 +24,29 @@ Dabbled briefly with sub-minute timings - see utils.rb in lib/* but
 stopped after my eyes started to water. That being said there are some
 singleton util methods that might be of use in this regard.
 
+## Setting timezones
+
+An instance of ```Cron``` can use a specific timezone.
+
+Something like this
+
+```ruby
+require 'rubygems'
+require 'active_support'
+#require 'active_support/time_with_zone'
+#require 'active_support/values/time_zone'
+require 'active_support/core_ext/time/zones'
+
+cron = Cron.new
+cron.time {
+  Time.use_zone("Australia/Sydney") {
+    Time.zone.now
+  }
+}
+
+cron.time => <time with timezone>
+```
+
 ## Contact
 
 Pretty bad with email.  Try danb with catalyst-au.net as the domain.
