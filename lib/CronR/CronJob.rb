@@ -1,10 +1,10 @@
-# The files in this directory are part of RubyCron, a ruby library.
+# The files in this directory are part of CronR, a ruby library.
 # Copyright (C) 2014 Daniel Bush
 # This program is distributed under the terms of the MIT License. A
 # copy of the license should be enclosed with this project in the file
 # LICENSE.txt.
 
-module RubyCron
+module CronR
 
   # An instance (cp) of this class (a subclass of hash) represents the
   # standard cron parameters along with an id and something
@@ -83,26 +83,6 @@ module RubyCron
 
     def job= thing
       self[:job] = thing
-    end
-
-    # For 'p'.
-
-    def inspect
-      self[:id] + ': ' +
-      [:minute,:hour,:day,:month,:dow].inject(""){|str,ct|
-        case self[ct]
-        when TrueClass
-          str + '*' + ' '
-        when Numeric
-          str + self[ct].to_s + ' '
-        when Enumerator
-          str + self.to_a.join(',') + ' '
-        when Array
-          str + self.join(',') + ' '
-        else
-          str + '? '
-        end
-      }.chop
     end
 
     # Return true if job is runnable at the given time.

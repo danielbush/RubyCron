@@ -1,4 +1,4 @@
-# The files in this directory are part of RubyCron, a ruby library.
+# The files in this directory are part of CronR, a ruby library.
 # Copyright (C) 2014 Daniel Bush
 # This program is distributed under the terms of the MIT License. A
 # copy of the license should be enclosed with this project in the file
@@ -6,7 +6,7 @@
 
 require_relative 'utils'
 
-module RubyCron
+module CronR
 
   # This is an array that is modified to represent a cron table along
   # with the necessary machinery to run it.
@@ -103,11 +103,12 @@ module RubyCron
     # cron_job#job. That is the work for another thread esp. if #job
     # is a Proc.
 
-    def run
+    def run time=nil
 
-      p "[cron] run called #{Time.now}" if @debug
+      puts "[cron] run called #{Time.now}" if @debug
+      time = self.time if time.nil?
       self.each{|cron_job|
-        ok,details = cron_job.runnable?(self.time)
+        ok,details = cron_job.runnable?(time)
         if ok then
           @queue.enq(cron_job)
           if cron_job.once? then
@@ -125,13 +126,14 @@ module RubyCron
     def start debug=false
       @stop = false
       @suspend = false
-      @thread = RubyCron::Utils.every_minute(debug) {
+      @thread = CronR::Utils.every_minute(debug) {
+        time = self.time
         @mutex.synchronize {
           if @stop then
             true
           elsif @suspend then
           else
-            self.run
+            self.run(time)
           end
         }
       }
@@ -146,7 +148,7 @@ module RubyCron
     def start_test secs
       @stop = false
       @suspend = false
-      @thread = RubyCron::Utils.every(secs,true) {
+      @thread = CronR::Utils.every(secs,true) {
         @mutex.synchronize {
           if @stop then
             true
@@ -189,14 +191,6 @@ module RubyCron
           block.call(self)
         }
       end
-    end
-
-    # For 'p'.
-
-    def inspect
-      self.map {|job|
-        job.inspect
-      }.join("\n")
     end
 
   end

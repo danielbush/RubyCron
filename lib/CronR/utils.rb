@@ -1,10 +1,10 @@
-# The files in this directory are part of RubyCron, a ruby ibrary.
+# The files in this directory are part of CronR, a ruby ibrary.
 # Copyright (C) 2014 Daniel Bush
 # This program is distributed under the terms of the MIT License. A
 # copy of the license should be enclosed with this project in the file
 # LICENSE.txt.
 
-module RubyCron
+module CronR
   module Utils
 
     # Wake up every minute and call &block.

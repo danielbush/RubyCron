@@ -1,4 +1,14 @@
-# RubyCron
+# CronR
+
+Pronounced "cron-rrrr" ...
+
+...because RubyCron was taken.  So was cronic for that matter... and RCron.
+
+CronR is a light-weight implementation of a cron-like system.
+
+For the impatient, head over to examples/ .
+
+For the patient, there's documentation of the Cron and CronJob classes in the code in lib/.
 
 Consists of:
 
