@@ -28,8 +28,6 @@ Pretty early days.
 
 This was part of an experiment in subclassing basic datastructures and playing a bit more with threads.
 
-Bit naughty, no specs at the moment.
-
 Dabbled briefly with sub-minute timings - see utils.rb in lib/* but
 stopped after my eyes started to water. That being said there are some
 singleton util methods that might be of use in this regard.
