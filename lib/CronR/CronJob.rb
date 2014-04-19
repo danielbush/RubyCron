@@ -33,6 +33,7 @@ module CronR
   #
   # For each component: [:minute,:hour,:day,:dow,:month] we can
   # then interpret the settings as:
+  # 
   # [true,true,true,true,true]
   #   => run every minute of every hour of every month of every day of
   #      the week

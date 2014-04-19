@@ -11,15 +11,20 @@ module CronR
   # This is an array that is modified to represent a cron table along
   # with the necessary machinery to run it.
   #
+  #   cron = Cron.new
+  #   # Or
   #   cron = Cron.new(job1,job2,...)
+  #
+  # To start cron:
+  # 
   #   cron.start
   #   
   # Jobs are instances of CronJob (although these are just glorified
   # hashes).
   # In fact, Cron expects job instances to respond to:
   # 
-  #  runnable?(time) => if we can run now
-  #  once? => this job is a one-off
+  #   runnable?(time) => if we can run now
+  #   once? => this job is a one-off
   #   
   # @see CronJob 
   #   
