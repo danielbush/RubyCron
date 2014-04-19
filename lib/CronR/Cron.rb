@@ -65,9 +65,17 @@ module CronR
   # 
   # If a runnable item carries a proc, we don't run it - the thread
   # used in Cron is just for doing cron.
-  # So runnable items are basically enqueued to @schedule.
-  # @schedule is just a queue.
+  # So runnable items are basically enqueued to @queue.
   # You can create an thread and have it dequeue this queue.
+  # 
+  #   Thread.new {
+  #     loop {
+  #       job = cron.queue.deq
+  #       job.run  # Using CronJob#run .
+  #       ...
+  #     }
+  #   }
+  #   
   # You can also replace queue with something.  It should respond
   # to #enq and #deq and be thread-safe.  One example might be
   # to have #enq insert a record into a table.
