@@ -72,17 +72,26 @@ module CronR
         #self[:job] = block.call(self)
         self[:job] = block
       else
-        case self[:job]
-        when Proc
-          self[:job].call(self)
-        else
-          self[:job]
-        end
+        self[:job]
       end
     end
 
     def job= thing
       self[:job] = thing
+    end
+
+    # Run the job.
+    #
+    # This is a convenience method to handle calling proc based
+    # :job's.
+
+    def run
+      case self[:job]
+      when Proc
+        self[:job].call
+      else
+        self[:job]
+      end
     end
 
     # Return true if job is runnable at the given time.
@@ -122,7 +131,7 @@ module CronR
     # Return true if the job is intended to only be run as a one-off.
 
     def once?
-      self[:once]
+      self[:once] || false
     end
 
   end

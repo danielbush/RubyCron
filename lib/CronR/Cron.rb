@@ -69,7 +69,7 @@ module CronR
 
   class Cron < Array
 
-    attr_reader :thread,:mutex
+    attr_reader :thread,:mutex,:stopped,:suspended
     attr_accessor :debug,:queue
 
     # *items should consist of 0 or more items of form:
@@ -77,6 +77,8 @@ module CronR
 
     def initialize *jobs
       super()
+      @stopped = true
+      @suspended = false
       @queue = Queue.new
       jobs.each{|job|
         self.push(job)
@@ -123,38 +125,21 @@ module CronR
     #
     # Will wake up every minute and perform #run.
 
-    def start debug=false
-      @stop = false
-      @suspend = false
-      @thread = CronR::Utils.every_minute(debug) {
+    def start debug=false,method=:every_minute,*args
+      @stopped = false
+      @suspended = false
+      @dead = Queue.new
+      @thread = CronR::Utils.send(method,debug,*args) {
         time = self.time
         @mutex.synchronize {
-          if @stop then
+          if @stopped then
+            # It's important we put something on this queue ONLY AFTER
+            # we've acquired the mutex...
+            @dead.enq(true)
             true
-          elsif @suspend then
+          elsif @suspended then
           else
             self.run(time)
-          end
-        }
-      }
-    end
-
-    # Allows you to use sub-minute intervals - useful for live
-    # testing.
-    #
-    # DON'T RUN THIS NORMALLY, eligible entries will run multiple
-    # times a minute.
-
-    def start_test secs
-      @stop = false
-      @suspend = false
-      @thread = CronR::Utils.every(secs,true) {
-        @mutex.synchronize {
-          if @stop then
-            true
-          elsif @suspend then
-          else
-            self.run
           end
         }
       }
@@ -167,13 +152,13 @@ module CronR
     # You can use this to safely modify this array.
 
     def suspend &block
-      @suspend = true
       if block_given? then
         @mutex.synchronize {
           begin
+            @suspended = true
             block.call(self)
           ensure
-            @suspend = false
+            @suspended = false
           end
         }
       end
@@ -185,9 +170,19 @@ module CronR
     # stopped.
 
     def stop &block
-      @stop = true
       if block_given? then
+        @stopped = true
+        @suspended = false
+        # Wait till something is put on the dead queue...
+        # This stops us from acquiring the mutex until after @thread
+        # has processed @stopped set to true.
+        sig = @dead.deq
+        # The cron thread should be dead now, or wrapping up (with the
+        # acquired mutex)... 
         @mutex.synchronize {
+          while @thread.alive?
+            sleep 0.2
+          end
           block.call(self)
         }
       end

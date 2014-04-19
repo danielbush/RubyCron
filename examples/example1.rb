@@ -2,7 +2,7 @@ require_relative '../lib/CronR'
 require 'pp'
 
 Cron = CronR::Cron
-Job = CronR::CronJob
+Job  = CronR::CronJob
 
 cron = Cron.new
 cron.debug = true
