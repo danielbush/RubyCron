@@ -16,7 +16,9 @@ module CronR
   #   uninitialized constant Time::DATE_FORMATS
   #   activesupport-4.0.4/lib/active_support/time_with_zone.rb:193:in `to_s'
 
-  Time::DATE_FORMATS ||= {}
+  unless Time.const_defined?('DATE_FORMATS') then
+    Time::DATE_FORMATS = {}
+  end
 
   require_relative 'CronR/utils'
   require_relative 'CronR/Cron'
