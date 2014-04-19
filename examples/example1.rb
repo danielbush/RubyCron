@@ -40,7 +40,7 @@ cron.suspend {|arr|
 Thread.new {
   loop {
     job = cron.queue.deq
-    job[:job].call
+    job.run
   }
 }
 
