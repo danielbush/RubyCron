@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'CronR'
-  s.version     = '0.1.0'
+  s.version     = '0.1.1'
   s.date        = '2014-04-19'
   s.summary     = "An implementation of cron in ruby."
   s.description = "Simple, thread-based, light-weight cron implementation."
@@ -14,4 +14,5 @@ Gem::Specification.new do |s|
   ]
   s.homepage    = 'http://github.com/danielbush/RubyCron'
   s.license       = 'MIT'
+  s.add_runtime_dependency 'activesupport','>=3.0.0'
 end
