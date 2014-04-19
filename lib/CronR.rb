@@ -5,6 +5,19 @@
 # LICENSE.txt.
 
 module CronR
+  require 'active_support'
+  #require 'active_support/time_with_zone'
+  #require 'active_support/values/time_zone'
+  require 'active_support/core_ext/time/zones'
+
+  # Hack! - set Time::DATE_FORMATS if not there already.
+  # 
+  # If this is not set, activesupport may throw a hissy fit:
+  #   uninitialized constant Time::DATE_FORMATS
+  #   activesupport-4.0.4/lib/active_support/time_with_zone.rb:193:in `to_s'
+
+  Time::DATE_FORMATS ||= {}
+
   require_relative 'CronR/utils'
   require_relative 'CronR/Cron'
   require_relative 'CronR/CronJob'
