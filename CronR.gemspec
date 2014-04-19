@@ -1,0 +1,17 @@
+Gem::Specification.new do |s|
+  s.name        = 'CronR'
+  s.version     = '0.1.0'
+  s.date        = '2014-04-19'
+  s.summary     = "An implementation of cron in ruby."
+  s.description = "Simple, thread-based, light-weight cron implementation."
+  s.authors     = ["Daniel Bush"]
+  s.email       = 'dlb.id.au@gmail.com'
+  s.files       = [
+    "lib/CronR.rb",
+    "lib/CronR/utils.rb",
+    "lib/CronR/CronJob.rb",
+    "lib/CronR/Cron.rb",
+  ]
+  s.homepage    = 'http://github.com/danielbush/RubyCron'
+  s.license       = 'MIT'
+end
