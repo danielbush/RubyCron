@@ -39,12 +39,6 @@ An instance of ```Cron``` can use a specific timezone.
 Something like this
 
 ```ruby
-require 'rubygems'
-require 'active_support'
-#require 'active_support/time_with_zone'
-#require 'active_support/values/time_zone'
-require 'active_support/core_ext/time/zones'
-
 cron = Cron.new
 cron.time {
   Time.use_zone("Australia/Sydney") {
