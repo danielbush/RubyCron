@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'CronR'
-  s.version     = '0.1.3'
-  s.date        = '2014-04-19'
+  s.version     = '0.1.4'
+  s.date        = '2014-05-03'
   s.summary     = "An implementation of cron in ruby."
   s.description = "Simple, thread-based, light-weight cron implementation."
   s.authors     = ["Daniel Bush"]
