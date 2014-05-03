@@ -40,13 +40,8 @@ Something like this
 
 ```ruby
 cron = Cron.new
-cron.time {
-  Time.use_zone("Australia/Sydney") {
-    Time.zone.now
-  }
-}
-
-cron.time => <time with timezone>
+cron.timezone = "Australia/Sydney"
+cron.time #=> <time with zone>
 ```
 
 ## Contact
