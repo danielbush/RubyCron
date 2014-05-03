@@ -6,6 +6,12 @@ Job  = CronR::CronJob
 
 cron = Cron.new
 cron.debug = true
+
+# Optional
+# Set timezone...
+cron.timezone = "Australia/Sydney"
+p cron.time
+
 cron.start
 
 # So cron is now running, but it's not actually doing much because it

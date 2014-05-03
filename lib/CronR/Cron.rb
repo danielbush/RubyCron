@@ -84,6 +84,7 @@ module CronR
 
     attr_reader :thread,:mutex,:stopped,:suspended
     attr_accessor :debug,:queue
+    attr_accessor :timezone
 
     # *items should consist of 0 or more items of form:
     #   [job_id(string),CronJob.new(...),thing]
@@ -97,18 +98,20 @@ module CronR
         self.push(job)
       }
       @mutex = Mutex.new
+      @timezone = nil
     end
 
     # Get current time.
     # 
     # If passed a block, the block will be used to get the time.
 
-    def time &block
-      if block_given? then
-        @time = block
+    def time
+      if @timezone then
+        Time.use_zone(@timezone) {
+          Time.zone.now
+        }
       else
-        @time ||= lambda{Time.now}
-        @time.call
+        Time.now
       end
     end
 

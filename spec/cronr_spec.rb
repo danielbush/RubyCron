@@ -194,17 +194,24 @@ end
 describe CronR::Cron do
 
   describe "time handling" do
+
     it "should fetch time" do
       c = Cron.new
       c.time.class.should == Time
     end
-    it "should allows us to specify our own time" do
-      c = Cron.new
-      c.time {
-        :funkytime
-      }
-      c.time.should == :funkytime
+
+    it "should allow us to set a timezone" do
+      @cron = Cron.new
+
+      @cron.timezone = "Australia/Sydney"
+      @cron.timezone.should == "Australia/Sydney"
+      @cron.time.utc_offset.between?(10*3600,11*3600).should == true
+
+      @cron.timezone = "Australia/Perth"
+      @cron.timezone.should == "Australia/Perth"
+      @cron.time.utc_offset.between?(7*3600,8*3600).should == true
     end
+
   end
 
   describe "adding jobs" do
@@ -310,5 +317,6 @@ describe CronR::Cron do
     end
 
   end
+
 
 end
