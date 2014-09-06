@@ -5,7 +5,56 @@
 # LICENSE.txt.
 
 module CronR
+
   module Utils
+
+    # Parse a single cron parameter into a format that CronR uses.
+    #
+    # Currently not used directly by CronR.  But may be handy for
+    # translating cron parameters.
+    #
+    # '*' => true
+    # '1' => 1
+    # '1-3' => [1,2,3]
+    # Other forms which translate to arrays:
+    # '*/3' '1-5/2' '2,4,8' '2-4,6-8'
+    #
+    # In the case of */3 we do: (1..59).step(3).to_a
+    # which will hopefully cover all cases.
+
+    def self.parse_param str
+      parts = str.split(',')
+      if parts.empty? || parts.detect{|i| i.empty? } then
+        raise "Not enough information to process parameter: '#{str}'."
+      end
+      parts.map{ |p|
+        n, step = p.split('/')
+        raise "No number before slash: '#{str}'" if n.empty?
+        a, b = n.split('-')
+        raise "No number before hyphen: '#{str}'" if a.empty?
+        if b then
+          a, b = a.to_i, b.to_i
+          if step then
+            (a..b).step(step.to_i).to_a
+          else
+            (a..b).to_a
+          end
+        else
+          case a
+          when '*'
+            if step then
+              # Bit cheap, basically we'll cover ourselves for all
+              # component types by going up to 59
+              (0..59).step(step.to_i).to_a
+            else
+              return true  # ick, exit def
+            end
+          else
+            [a.to_i]
+          end
+        end
+      }.flatten
+    end
 
     # Wake up every minute and call &block.
     #
@@ -18,7 +67,7 @@ module CronR
       Thread.new {
         now = Time.now
         wait = secs-now.sec-now.usec.to_f/mil
-        p "[every_minute] sleeping #{wait}" if debug
+        #p "[every_minute] sleeping #{wait}" if debug
         sleep wait
         loop {
           result = block.call
@@ -27,7 +76,7 @@ module CronR
           end
           now = Time.now
           wait = secs-now.sec-now.usec.to_f/mil
-          p "[every_minute] sleeping #{wait}" if debug
+          #p "[every_minute] sleeping #{wait}" if debug
           sleep(wait)
         }
       }
@@ -45,7 +94,7 @@ module CronR
           if result==true then
             break
           end
-          p "[every] sleeping #{secs}" if debug
+          #p "[every] sleeping #{secs}" if debug
           sleep secs
         }
       }
@@ -121,4 +170,5 @@ module CronR
     end
 
   end
+
 end

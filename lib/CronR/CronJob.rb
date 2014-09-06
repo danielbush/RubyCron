@@ -19,6 +19,12 @@ module CronR
   # cp.job = {...} => a non-proc job
   # 
   # CRON PARAMETERS:
+  #
+  # CronR parameters are represented as either:
+  # 
+  # i)   booleans = '*'
+  # ii)  Fixnums  = 'n' where n is an integer
+  # iii) Array    = 'n-m' 'n,m' 'n-m/k' 'n-m,o-p'
   # 
   # cp[s] where s can be :minute,:hour,:day,:dow,:month .
   # 
