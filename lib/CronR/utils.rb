@@ -27,11 +27,13 @@ module CronR
       if parts.empty? || parts.detect{|i| i.empty? } then
         raise "Not enough information to process parameter: '#{str}'."
       end
-      parts.map{ |p|
+      parts.map { |p|
         n, step = p.split('/')
         raise "No number before slash: '#{str}'" if n.empty?
         a, b = n.split('-')
         raise "No number before hyphen: '#{str}'" if a.empty?
+        a = a.strip
+        raise "Not a number or asterisk: '#{a}'" unless /^\d+$|^\*$/ === a
         if b then
           a, b = a.to_i, b.to_i
           if step then
