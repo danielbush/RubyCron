@@ -119,7 +119,7 @@ describe CronR::CronJob do
       j.runnable?(Time.new(2014,m=1,d=1+7,hour=1,min=1))[0].should == true
     end
 
-    describe "nth wednesday of the month)" do
+    describe "nth wednesday of the month" do
 
       # Example showing how to do something slightly more complicated:
 
