@@ -125,16 +125,18 @@ module CronR
 
       puts "[cron] run called #{Time.now}" if @debug
       time = self.time if time.nil?
-      self.each{|cron_job|
+      self.each { |cron_job|
         ok,details = cron_job.runnable?(time)
         if ok then
           @queue.enq(cron_job)
           if cron_job.once? then
-            self.delete(cron_job)
+            cron_job[:delete] = true
           end
         end
       }
-
+      self.reject! { |cron_job|
+        cron_job[:delete]
+      }
     end
 
     # Start cron.
